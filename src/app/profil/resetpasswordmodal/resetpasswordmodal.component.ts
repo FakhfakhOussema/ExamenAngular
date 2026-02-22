@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import firebase from 'firebase/compat/app';
 import { MatDialogRef } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-resetpasswordmodal',
@@ -27,19 +28,46 @@ export class ResetpasswordmodalComponent {
 
   async changePassword() {
     if (this.passwordForm.invalid) {
-      alert("Please fill all fields correctly");
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'warning',
+        title: 'Please fill all fields correctly',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+      });
       return;
     }
 
     const { currentPassword, newPassword, confirmPassword } = this.passwordForm.value;
 
     if (newPassword !== confirmPassword) {
-      alert("New password and confirmation do not match");
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'warning',
+        title: 'New password and confirmation do not match',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+      });
       return;
     }
 
     const user = await this.afAuth.currentUser;
-    if (!user || !user.email) return alert('User not logged in');
+    if (!user || !user.email) {
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'error',
+        title: 'User not logged in',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+      });
+      return;
+    }
 
     const credential = firebase.auth.EmailAuthProvider.credential(
       user.email,
@@ -47,17 +75,31 @@ export class ResetpasswordmodalComponent {
     );
 
     try {
-      // Ré-authentification
       await user.reauthenticateWithCredential(credential);
-
-      // Mise à jour du mot de passe
       await user.updatePassword(newPassword);
 
-      alert('Password updated successfully!');
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'success',
+        title: 'Password updated successfully!',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+      });
+
       this.dialogRef.close(); // fermer le modal
     } catch (err: any) {
       console.error(err);
-      alert('Error: ' + err.message);
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'error',
+        title: err.message,
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true
+      });
     }
   }
 }

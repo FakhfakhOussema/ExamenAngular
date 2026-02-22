@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { Product } from 'src/app/Modeles/Product';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-product-form',
@@ -11,8 +12,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ProductFormComponent implements OnInit {
 
   form!: FormGroup;
-
+  categories: any[] = [];
   subCategories: any[] = [];
+  filteredSubCategories: any[] = [];
 
   isEditMode = false;
   productId!: number;
@@ -28,65 +30,97 @@ export class ProductFormComponent implements OnInit {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       productNumber: new FormControl('', Validators.required),
-      standardCost: new FormControl(0),
-      listPrice: new FormControl(0),
-      sellStartDate: new FormControl<string | null>(null),
-      productSubcategoryID: new FormControl(null)
+      makeFlag: new FormControl(true),
+      finishedGoodsFlag: new FormControl(true),
+      safetyStockLevel: new FormControl(1, [Validators.required, Validators.min(1)]),
+      reorderPoint: new FormControl(1, [Validators.required, Validators.min(1)]),
+      standardCost: new FormControl(0, Validators.min(0)),
+      listPrice: new FormControl(0, Validators.min(0)),
+      daysToManufacture: new FormControl(0, Validators.min(0)),
+      sellStartDate: new FormControl(new Date().toISOString().split('T')[0]),
+      categoryID: new FormControl(null, Validators.required),
+      productSubcategoryID: new FormControl({ value: null, disabled: true }, Validators.required)
     });
 
     const id = this.route.snapshot.paramMap.get('id');
-
     if (id) {
       this.isEditMode = true;
       this.productId = +id;
-      this.loadProduct(this.productId);
     }
 
-    this.loadSubCategories();
+    forkJoin({
+      cats: this.api.getCategories(),
+      subs: this.api.getSubCategories()
+    }).subscribe(({ cats, subs }) => {
+
+      this.categories = cats.map(c => ({ ...c, categoryID: Number(c.productCategoryID) }));
+      this.subCategories = subs.map(s => ({
+        ...s,
+        productSubcategoryID: Number(s.productSubcategoryID),
+        categoryID: Number(s.productCategoryID)
+      }));
+
+      this.setupCategoryWatcher();
+
+      if (this.isEditMode) {
+        this.loadProduct(this.productId);
+      }
+    });
+  }
+
+  setupCategoryWatcher() {
+    this.form.get('categoryID')?.valueChanges.subscribe(catId => {
+      const cat = catId != null ? Number(catId) : null;
+      this.filteredSubCategories = cat != null
+        ? this.subCategories.filter(s => s.categoryID === cat)
+        : [];
+
+      if (cat != null) this.form.get('productSubcategoryID')?.enable();
+      else this.form.get('productSubcategoryID')?.disable();
+
+      this.form.get('productSubcategoryID')?.setValue(null);
+    });
   }
 
   loadProduct(id: number) {
+    this.api.getProductById(id).subscribe(res => {
+      const sellStartDate = res.sellStartDate ? res.sellStartDate.split('T')[0] : null;
 
-    this.api.getProductById(this.productId).subscribe(res => {
+      const sub = this.subCategories.find(s => s.productSubcategoryID === Number(res.productSubcategoryID));
+      const categoryID = sub ? sub.categoryID : null;
 
-      if (res.sellStartDate) {
-        res.sellStartDate = res.sellStartDate.split('T')[0];
-      }
+      this.form.get('categoryID')?.setValue(categoryID, { emitEvent: true });
 
-      this.form.patchValue(res);
+      this.form.patchValue({
+        productSubcategoryID: res.productSubcategoryID,
+        name: res.name,
+        productNumber: res.productNumber,
+        standardCost: res.standardCost ?? 0,
+        listPrice: res.listPrice ?? 0,
+        safetyStockLevel: res.safetyStockLevel ?? 1,
+        reorderPoint: res.reorderPoint ?? 1,
+        sellStartDate
+      }, { emitEvent: false });
 
-    });
-
-  }
-
-  loadSubCategories() {
-    this.api.getSubCategories().subscribe(res => {
-      this.subCategories = res;
+      if (categoryID != null) this.form.get('productSubcategoryID')?.enable();
     });
   }
 
   save() {
-
     if (this.form.invalid) return;
 
-    const product: Product = {
-      productID: this.isEditMode ? this.productId : 0,
-      ...this.form.value
+    const product = {
+      ...this.form.value,
+      safetyStockLevel: this.form.value.safetyStockLevel || 1,
+      reorderPoint: this.form.value.reorderPoint || 1
     };
 
-    if (this.isEditMode) {
+    const request$ = this.isEditMode
+      ? this.api.updateProduct({ productID: this.productId, ...product })
+      : this.api.addProduct(product);
 
-      this.api.updateProduct(product).subscribe(() => {
-        this.router.navigate(['/products']);
-      });
-
-    } else {
-
-      this.api.addProduct(product).subscribe(() => {
-        this.router.navigate(['/products']);
-      });
-
-    }
+    request$.subscribe(() => {
+      this.router.navigate(['/products']);
+    });
   }
-
 }

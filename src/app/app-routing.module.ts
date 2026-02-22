@@ -112,7 +112,6 @@ const routes: Routes = [
     canActivate: [AuthService]
   },
 
-  // Edit route (dynamic route ⭐)
   {
     path: ':id/edit',
     component: MemberFormComponent,

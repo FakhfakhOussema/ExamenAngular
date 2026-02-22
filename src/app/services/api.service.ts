@@ -57,6 +57,9 @@ export class ApiService {
       product
     );
   }
+  deleteProduct(id: number) {
+    return this.http.delete(`${this.baseUrl}/Products/${id}`);
+  }
   updateProduct(product: Product) {
     return this.http.put<Product>(
       `${this.baseUrl}/Products/${product.productID}`,
