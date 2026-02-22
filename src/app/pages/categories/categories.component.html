@@ -1,0 +1,46 @@
+<button mat-raised-button color="primary" (click)="openCategoryModal()"
+style="float:right; margin:0px 50px 20px 0px;">
+Add Category
+</button>
+
+<table mat-table [dataSource]="categories"
+class="mat-elevation-z8"
+style="width:80%; margin:auto;">
+
+<!-- ID -->
+<ng-container matColumnDef="productCategoryID">
+<th mat-header-cell *matHeaderCellDef>ID</th>
+<td mat-cell *matCellDef="let element">
+{{element.productCategoryID}}
+</td>
+</ng-container>
+
+<!-- Name -->
+<ng-container matColumnDef="name">
+<th mat-header-cell *matHeaderCellDef>Name</th>
+<td mat-cell *matCellDef="let element">
+{{element.name}}
+</td>
+</ng-container>
+
+<!-- Actions -->
+<ng-container matColumnDef="actions">
+<th mat-header-cell *matHeaderCellDef>Actions</th>
+
+<td mat-cell *matCellDef="let element">
+
+<button mat-icon-button color="accent" (click)="openEditCategoryModal(element)">
+<mat-icon>edit</mat-icon>
+</button>
+
+<button mat-icon-button color="warn" (click)="deleteCategory(element.productCategoryID)">
+<mat-icon>delete</mat-icon>
+</button>
+
+</td>
+</ng-container>
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+</table>

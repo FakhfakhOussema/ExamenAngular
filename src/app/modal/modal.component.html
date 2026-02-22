@@ -1,0 +1,25 @@
+<mat-dialog-content [formGroup]="form">
+  
+    <mat-form-field>
+        <mat-label>Titre</mat-label>
+        <input matInput formControlName="titre">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Date Début</mat-label>
+        <input matInput formControlName="dateDebut" type="date">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Date Fin</mat-label>
+        <input matInput formControlName="dateFin" type="date">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Lieu</mat-label>
+        <input matInput formControlName="lieu">
+    </mat-form-field>
+ 
+</mat-dialog-content>
+
+<mat-dialog-actions style="float:right; margin:0px 15px 20px 0px;">
+    <button  mat-raised-button class="mat-raised-button"(click)="close()">Close</button>
+    <button  mat-raised-button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+</mat-dialog-actions>

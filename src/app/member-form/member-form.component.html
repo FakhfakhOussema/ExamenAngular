@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+ 
+    <mat-form-field appearance="fill">
+        <input matInput placeholder="Vide..." formControlName="">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <input matInput placeholder="cin" formControlName="cin">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <input matInput placeholder="name" formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <input matInput placeholder="type" formControlName="type">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <input matInput placeholder="cv" formControlName="cv">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <input matInput placeholder="createdDate" formControlName="createdDate">
+    </mat-form-field>
+    
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+</form>

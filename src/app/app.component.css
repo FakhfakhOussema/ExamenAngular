@@ -1,0 +1,84 @@
+/* Layout container */
+.layout-container {
+  height: 100vh;
+  width: 100%;
+}
+
+/* Sidenav */
+.sidenav {
+  width: 230px;
+}
+
+.sidenav-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Toolbar */
+.top-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+}
+
+.menu-button {
+  margin-right: 10px;
+}
+
+.app-title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+/* User button */
+.user-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #eee;
+}
+
+.arrow {
+  font-size: 16px;
+}
+
+/* Main content */
+.main-content {
+  padding: 24px;
+}
+
+/* Login page */
+.login-content {
+  height: 100vh;
+  width: 100%;
+}
+
+/* Fix alignment of icons + text in sidenav */
+mat-nav-list a.mat-list-item {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px;
+  padding-left: 16px; /* Alignement propre */
+  height: 48px; /* Même hauteur partout */
+}
+
+/* Force icon alignment */
+mat-icon[matListIcon] {
+  font-size: 22px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,48 @@
+<h2 style="text-align:center;">Add Sub Category</h2>
+
+<form [formGroup]="form"
+      (ngSubmit)="save()"
+      style="width:50%; margin:auto;">
+
+  <!-- Name -->
+  <mat-form-field appearance="outline" style="width:100%">
+    <mat-label>Sub Category Name</mat-label>
+    <input matInput formControlName="name">
+    <mat-error *ngIf="form.get('name')?.hasError('required')">
+      Name is required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Parent Category -->
+  <mat-form-field appearance="outline" style="width:100%">
+    <mat-label>Select Parent Category</mat-label>
+    <mat-select formControlName="productCategoryID">
+      <mat-option *ngFor="let cat of categories"
+                  [value]="cat.productCategoryID">
+        {{ cat.name }}
+      </mat-option>
+    </mat-select>
+
+    <mat-error *ngIf="form.get('productCategoryID')?.hasError('required')">
+      Category is required
+    </mat-error>
+  </mat-form-field>
+
+  <div style="margin-top:20px; display:flex; gap:10px;">
+
+    <button mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="form.invalid">
+      Save
+    </button>
+
+    <button mat-button
+            type="button"
+            routerLink="/subcategories">
+      Cancel
+    </button>
+
+  </div>
+
+</form>
