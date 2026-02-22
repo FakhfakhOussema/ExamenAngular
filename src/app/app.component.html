@@ -3,7 +3,9 @@
   <mat-sidenav-container>
 
     <!-- --- SIDENAV --- -->
-    <mat-sidenav #drawer fixedInViewport="true" mode="side" [opened]="false" class="sidenav">
+    <button mat-icon-button (click)="toggleDrawer()" class="menu-button">
+      <mat-icon>menu</mat-icon>
+    </button>
 
       <mat-toolbar color="primary" class="sidenav-header">
         <mat-icon>store</mat-icon>

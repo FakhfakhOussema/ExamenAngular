@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Category } from '../Modeles/Category';
 import { SubCategory } from '../Modeles/SubCategory';
-import { Product } from 'src/app/Modeles/product';
+import { Product } from '../Modeles/Product';
 
 @Injectable({
   providedIn: 'root'

@@ -33,47 +33,54 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  { 
-    path: 'signup', 
-    component: SignupComponent 
-  },
-  { 
-    path: 'profil', 
-    component: ProfilComponent 
-  },
-
   {
-  path: 'subcategories',
-  component: SubcategoriesComponent,
+    path: 'signup',
+    component: SignupComponent
   },
-  {
-  path: 'subcategories/add',
-  component: AddSubcategoryComponent
-  },
-  {
-  path: 'subcategories/edit/:id',
-  component: EditSubcategoryComponent
-  },
-  {
-  path: 'categories',
-  component: CategoriesComponent,
-  },
-  {
-  path: 'products',
-  component: ProductsComponent,
-  },
-  {
-  path: 'products/add',
-  component: ProductFormComponent
-},
-{
-  path: 'products/edit/:id',
-  component: ProductFormComponent
-
-},
-
 
   // Protected routes
+  {
+    path: 'profil',
+    component: ProfilComponent,
+    canActivate: [AuthService]
+  },
+
+  {
+    path: 'subcategories',
+    component: SubcategoriesComponent,
+    canActivate: [AuthService]
+  },
+  {
+    path: 'subcategories/add',
+    component: AddSubcategoryComponent,
+    canActivate: [AuthService]
+  },
+  {
+    path: 'subcategories/edit/:id',
+    component: EditSubcategoryComponent,
+    canActivate: [AuthService]
+  },
+  {
+    path: 'categories',
+    component: CategoriesComponent,
+    canActivate: [AuthService]
+  },
+  {
+    path: 'products',
+    component: ProductsComponent,
+    canActivate: [AuthService]
+  },
+  {
+    path: 'products/add',
+    component: ProductFormComponent,
+    canActivate: [AuthService]
+  },
+  {
+    path: 'products/edit/:id',
+    component: ProductFormComponent,
+    canActivate: [AuthService]
+
+  },
   {
     path: 'create',
     component: MemberFormComponent,
@@ -112,10 +119,9 @@ const routes: Routes = [
     canActivate: [AuthService]
   },
 
-  // Wildcard route MUST be last ⭐
   {
     path: '**',
-    component: MemberComponent
+    redirectTo: 'login'
   }
 
 ];
