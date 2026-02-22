@@ -1,0 +1,34 @@
+<div class="profile-container">
+
+    <div class="profile-card">
+
+        <div class="avatar-section">
+            <mat-icon class="avatar-icon">account_circle</mat-icon>
+            <h2 class="title">{{ userName || 'User' }}</h2>
+            <p class="role">Role: User</p>
+        </div>
+
+
+        <form>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <mat-icon matPrefix>email</mat-icon>
+                <input matInput [value]="userEmail" readonly>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" type="button" (click)="changePassword()">
+                <mat-icon>lock_reset</mat-icon>
+                Change password
+            </button>
+
+            <button mat-raised-button color="warn" type="button" (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                Logout
+            </button>
+
+        </form>
+
+    </div>
+
+</div>

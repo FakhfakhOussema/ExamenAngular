@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'adventure-work';
+  title = 'test';
 
   constructor(
       private AS: AuthService,
@@ -16,9 +16,8 @@ export class AppComponent {
     ) {}
   
   isLoginPage() {
-    return this.router.url === '/login';
+    return this.router.url === '/login' || this.router.url === '/signup';
   }
-
   logout() {
     this.AS.signOut()
       .then(() => {
@@ -27,5 +26,8 @@ export class AppComponent {
       .catch(err => {
         console.error('Erreur de déconnexion:', err);
       });
+  }
+  profil() {
+    this.router.navigate(['/profil']);
   }
 }

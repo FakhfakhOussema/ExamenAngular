@@ -40,7 +40,11 @@ import { CategoryModalComponent } from './pages/categories/category-modal/catego
 import { AddSubcategoryComponent } from './pages/subcategories/add-subcategory/add-subcategory.component';
 import { EditSubcategoryComponent } from './pages/subcategories/edit-subcategory/edit-subcategory.component';
 import { ProductFormComponent } from './pages/products/product-form/product-form.component';
-
+import { MatCardModule } from '@angular/material/card';
+import { ProfilComponent } from './profil/profil.component';
+import { ResetpasswordmodalComponent } from './profil/resetpasswordmodal/resetpasswordmodal.component';
+import { SignupComponent } from './signup/signup.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
@@ -59,7 +63,10 @@ import { ProductFormComponent } from './pages/products/product-form/product-form
     CategoryModalComponent,
     AddSubcategoryComponent,
     EditSubcategoryComponent,
-    ProductFormComponent
+    ProductFormComponent,
+    ProfilComponent,
+    ResetpasswordmodalComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +89,8 @@ import { ProductFormComponent } from './pages/products/product-form/product-form
     MatDialogModule,
     AngularFireModule.initializeApp (firebaseConfig),
     AngularFireAuthModule,
+    MatCardModule,
+    MatDividerModule
     
   ],
   bootstrap: [AppComponent]

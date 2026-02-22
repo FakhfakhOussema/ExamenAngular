@@ -27,4 +27,8 @@ export class LoginComponent {
       });
   }
 
+  goToSignup() {
+    this.router.navigate(['/signup']);
+  }
+
 }

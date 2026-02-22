@@ -15,6 +15,8 @@ import { ProductsComponent } from './pages/products/products.component';
 import { AddSubcategoryComponent } from './pages/subcategories/add-subcategory/add-subcategory.component';
 import { EditSubcategoryComponent } from './pages/subcategories/edit-subcategory/edit-subcategory.component';
 import { ProductFormComponent } from './pages/products/product-form/product-form.component';
+import { ProfilComponent } from './profil/profil.component';
+import { SignupComponent } from './signup/signup.component';
 
 
 const routes: Routes = [
@@ -30,6 +32,14 @@ const routes: Routes = [
     path: '',
     redirectTo: 'login',
     pathMatch: 'full'
+  },
+  { 
+    path: 'signup', 
+    component: SignupComponent 
+  },
+  { 
+    path: 'profil', 
+    component: ProfilComponent 
   },
 
   {

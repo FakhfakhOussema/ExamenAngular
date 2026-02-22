@@ -1,10 +1,10 @@
 <div class="login-container">
   <div class="login-card">
 
-    <h2 class="login-title">Welcome</h2>
-    <p class="login-subtitle">Sign in to continue</p>
+    <h2 class="login-title">Create Account</h2>
+    <p class="login-subtitle">Sign up to get started</p>
 
-    <form (ngSubmit)="login()">
+    <form (ngSubmit)="signup()">
 
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
@@ -16,12 +16,17 @@
         <input matInput type="password" name="password" [(ngModel)]="password" required />
       </mat-form-field>
 
+      <mat-form-field appearance="fill">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput type="password" name="confirmPassword" [(ngModel)]="confirmPassword" required />
+      </mat-form-field>
+
       <button mat-raised-button color="primary" type="submit">
-        Sign in
+        Create account
       </button>
 
-      <button mat-button type="button" (click)="goToSignup()" style="margin-top:10px;width:100%">
-        New here? Create an account
+      <button mat-button type="button" (click)="goToLogin()" style="margin-top:10px;width:100%">
+        Already have an account? Sign in
       </button>
 
     </form>

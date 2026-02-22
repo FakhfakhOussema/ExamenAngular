@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,11 @@ export class AuthService {
     return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
+  signUpWithEmailAndPassword(email: string, password: string) {
+    const auth = getAuth();
+    return createUserWithEmailAndPassword(auth, email, password);
+  }
+
   signOut() {
     return this.afAuth.signOut();
   }
@@ -28,6 +34,10 @@ export class AuthService {
         return false;
       })
     );
+  }
+
+  resetPassword(email: string){
+    return this.afAuth.sendPasswordResetEmail(email);
   }
 }
 
