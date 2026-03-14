@@ -20,7 +20,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import {MatMenuModule} from '@angular/material/menu';
-import { DashboradComponent } from './dashborad/dashborad.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { ToolComponent } from './tool/tool.component';
 import { EventComponent } from './event/event.component';
 import { ArticleComponent } from './article/article.component';
@@ -45,13 +45,15 @@ import { ProfilComponent } from './profil/profil.component';
 import { ResetpasswordmodalComponent } from './profil/resetpasswordmodal/resetpasswordmodal.component';
 import { SignupComponent } from './signup/signup.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { NgChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     MemberComponent,
     MemberFormComponent,
-    DashboradComponent,
+    DashboardComponent,
     ToolComponent,
     EventComponent,
     ArticleComponent,
@@ -90,7 +92,8 @@ import { MatDividerModule } from '@angular/material/divider';
     AngularFireModule.initializeApp (firebaseConfig),
     AngularFireAuthModule,
     MatCardModule,
-    MatDividerModule
+    MatDividerModule,
+    NgChartsModule
     
   ],
   bootstrap: [AppComponent]

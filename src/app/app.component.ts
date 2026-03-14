@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { AuthService } from 'src/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,26 +7,32 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+
   title = 'test';
 
   constructor(
-      private AS: AuthService,
-      private router: Router
-    ) {}
-  
+    private AS: AuthService,
+    private router: Router
+  ) { }
+
+  ngOnInit(): void {
+    if (this.AS.isAuthenticated()) {
+      this.AS.loadUserRole();
+    }
+  }
+
   isLoginPage() {
     return this.router.url === '/login' || this.router.url === '/signup';
   }
+
+
   logout() {
-    this.AS.signOut()
-      .then(() => {
-        this.router.navigate(['/login']);
-      })
-      .catch(err => {
-        console.error('Erreur de déconnexion:', err);
-      });
+    this.AS.signOut();
+    this.router.navigate(['/login']);
   }
+
+
   profil() {
     this.router.navigate(['/profil']);
   }

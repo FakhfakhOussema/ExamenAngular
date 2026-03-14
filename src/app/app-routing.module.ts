@@ -3,12 +3,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { MemberFormComponent } from './member-form/member-form.component';
 import { MemberComponent } from './member/member.component';
-import { DashboradComponent } from './dashborad/dashborad.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { ToolComponent } from './tool/tool.component';
 import { EventComponent } from './event/event.component';
 import { ArticleComponent } from './article/article.component';
 import { LoginComponent } from './login/login.component';
-import { AuthService } from '../services/auth.service';
 import { SubcategoriesComponent } from './pages/subcategories/subcategories.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { ProductsComponent } from './pages/products/products.component';
@@ -17,6 +16,7 @@ import { EditSubcategoryComponent } from './pages/subcategories/edit-subcategory
 import { ProductFormComponent } from './pages/products/product-form/product-form.component';
 import { ProfilComponent } from './profil/profil.component';
 import { SignupComponent } from './signup/signup.component';
+import { AuthGuard } from './guards/auth.guard.spec';
 
 
 const routes: Routes = [
@@ -42,80 +42,80 @@ const routes: Routes = [
   {
     path: 'profil',
     component: ProfilComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
 
   {
     path: 'subcategories',
     component: SubcategoriesComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'subcategories/add',
     component: AddSubcategoryComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'subcategories/edit/:id',
     component: EditSubcategoryComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'categories',
     component: CategoriesComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'products',
     component: ProductsComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'products/add',
     component: ProductFormComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'products/edit/:id',
     component: ProductFormComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
 
   },
   {
     path: 'create',
     component: MemberFormComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'dashboard',
-    component: DashboradComponent,
-    canActivate: [AuthService]
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'tools',
     component: ToolComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'events',
     component: EventComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'articles',
     component: ArticleComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
   {
     path: 'members',
     component: MemberComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
 
   {
     path: ':id/edit',
     component: MemberFormComponent,
-    canActivate: [AuthService]
+    canActivate: [AuthGuard]
   },
 
   {

@@ -1,0 +1,165 @@
+<h2>Dashboard</h2>
+
+<div style="display:flex; gap:12px; align-items:center; margin-bottom:10px;">
+  <label style="color:#64748b;font-weight:600;">Année (KPIs) :</label>
+  <input class="ctrl medium" type="number" [(ngModel)]="yearKpis" (change)="onYearKpisChange()">
+</div>
+
+<div *ngIf="loadingKpis" class="status">Chargement KPIs…</div>
+<div *ngIf="errorKpis" class="status error">{{ errorKpis }}</div>
+
+<div *ngIf="kpis" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-bottom:16px;">
+  <div class="kpi-card">CA Total<br><b>{{kpis.totalSales | number:'1.0-0'}}</b></div>
+  <div class="kpi-card">Commandes<br><b>{{kpis.ordersCount}}</b></div>
+  <div class="kpi-card">Quantité<br><b>{{kpis.totalQty}}</b></div>
+  <div class="kpi-card">Panier Moyen<br><b>{{kpis.avgOrderValue | number:'1.0-0'}}</b></div>
+</div>
+
+<div style="display:grid; grid-template-columns: 2fr 1fr; gap:16px; margin-bottom:16px;">
+
+  <div class="chart-box line">
+    <div class="chart-header">
+      <h3>Ventes par {{ grainPeriod === 'year' ? 'année' : 'mois' }}</h3>
+      <div class="filters">
+        <label>Année</label>
+        <input class="ctrl medium" type="number" [(ngModel)]="yearPeriod" (change)="onYearPeriodChange()">
+        <label>Grain</label>
+        <select class="ctrl select" [(ngModel)]="grainPeriod" (change)="onGrainPeriodChange()">
+          <option value="year">Année</option>
+          <option value="month">Mois</option>
+        </select>
+      </div>
+    </div>
+
+    <div *ngIf="loadingPeriod" class="status">Chargement…</div>
+    <div *ngIf="errorPeriod" class="status error">{{ errorPeriod }}</div>
+
+    <div class="chart-canvas">
+      <canvas baseChart [data]="salesPeriodData" [options]="lineOptions" [type]="'line'">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="chart-box doughnut">
+    <div class="chart-header">
+      <h3>Canal (Online / Reseller)</h3>
+      <div class="filters">
+        <label>Année</label>
+        <input class="ctrl medium" type="number" [(ngModel)]="yearChannel" (change)="onYearChannelChange()">
+      </div>
+    </div>
+
+    <div *ngIf="loadingChannel" class="status">Chargement…</div>
+    <div *ngIf="errorChannel" class="status error">{{ errorChannel }}</div>
+
+    <div class="chart-canvas">
+      <canvas baseChart [data]="channelData" [options]="doughnutOptions" [type]="'doughnut'">
+      </canvas>
+    </div>
+  </div>
+
+</div>
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+
+  <div class="chart-box products">
+    <div class="chart-header">
+      <h3>Top Produits</h3>
+      <div class="filters">
+        <label>Année</label>
+        <input class="ctrl medium" type="number" [(ngModel)]="yearProducts" (change)="onYearProductsChange()">
+        <label>Top</label>
+        <input class="ctrl small" type="number" [(ngModel)]="topNProducts" (change)="onTopNProductsChange()">
+      </div>
+    </div>
+
+    <div *ngIf="loadingProducts" class="status">Chargement…</div>
+    <div *ngIf="errorProducts" class="status error">{{ errorProducts }}</div>
+
+    <div class="chart-canvas">
+      <canvas baseChart [data]="topProductsData" [options]="barOptions" [type]="'bar'">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="chart-box customers">
+    <div class="chart-header">
+      <h3>Top Clients</h3>
+      <div class="filters">
+        <label>Année</label>
+        <input class="ctrl medium" type="number" [(ngModel)]="yearCustomers" (change)="onYearCustomersChange()">
+        <label>Top</label>
+        <input class="ctrl small" type="number" [(ngModel)]="topNCustomers" (change)="onTopNCustomersChange()">
+      </div>
+    </div>
+
+    <div *ngIf="loadingCustomers" class="status">Chargement…</div>
+    <div *ngIf="errorCustomers" class="status error">{{ errorCustomers }}</div>
+
+    <div class="chart-canvas">
+      <canvas baseChart [data]="topCustomersData" [options]="barOptions" [type]="'bar'">
+      </canvas>
+    </div>
+  </div>
+</div>
+<div class="grid-3">
+
+  <div class="chart-box territory">
+    <div class="chart-header">
+      <h3>Ventes par Territoire</h3>
+      <div class="filters">
+        <label>Année</label>
+        <input class="ctrl medium" type="number" [(ngModel)]="yearTerritory" (change)="onYearTerritoryChange()">
+      </div>
+    </div>
+
+    <div *ngIf="loadingTerritory" class="status">Chargement…</div>
+    <div *ngIf="errorTerritory" class="status error">{{ errorTerritory }}</div>
+
+    <div class="chart-canvas">
+      <canvas baseChart [data]="territoryData" [options]="barHorizontalOptions" [type]="'bar'">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="chart-box salesperson">
+    <div class="chart-header">
+      <h3>Top Commerciaux</h3>
+      <div class="filters">
+        <label>Année</label>
+        <input class="ctrl medium" type="number" [(ngModel)]="yearSalesPerson" (change)="onYearSalesPersonChange()">
+        <label>Top</label>
+        <input class="ctrl small" type="number" [(ngModel)]="topNSalesPerson" (change)="onTopNSalesPersonChange()">
+      </div>
+    </div>
+
+    <div *ngIf="loadingSalesPerson" class="status">Chargement…</div>
+    <div *ngIf="errorSalesPerson" class="status error">{{ errorSalesPerson }}</div>
+
+    <div class="chart-canvas">
+      <canvas baseChart [data]="salesPersonData" [options]="barHorizontalOptions" [type]="'bar'">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="chart-box promotion">
+    <div class="chart-header">
+      <h3>Top Promotions</h3>
+      <div class="filters">
+        <label>Année</label>
+        <input class="ctrl medium" type="number" [(ngModel)]="yearPromotion" (change)="onYearPromotionChange()">
+        <label>Top</label>
+        <input class="ctrl small" type="number" [(ngModel)]="topNPromotion" (change)="onTopNPromotionChange()">
+      </div>
+    </div>
+
+    <div *ngIf="loadingPromotion" class="status">Chargement…</div>
+    <div *ngIf="errorPromotion" class="status error">{{ errorPromotion }}</div>
+
+    <div class="chart-canvas">
+      <canvas baseChart [data]="promotionData" [options]="barHorizontalOptions" [type]="'bar'">
+      </canvas>
+    </div>
+  </div>
+
+</div>

@@ -4,6 +4,7 @@ import { Category } from '../../Modeles/Category';
 import { CategoryModalComponent } from './category-modal/category-modal.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-categories',
@@ -14,16 +15,26 @@ export class CategoriesComponent implements OnInit {
   categories: Category[] = [];
   loading = false;
   errorMessage = "";
+  isAdmin: boolean = false;
 
-  displayedColumns: string[] = [
-    'productCategoryID',
-    'name',
-    'actions'
-  ];
+  displayedColumns: string[] = [];
 
-  constructor(private apiService: ApiService, private dialog: MatDialog) { }
+  constructor(private apiService: ApiService, private dialog: MatDialog, private authService: AuthService) { }
 
   ngOnInit(): void {
+
+    this.authService.role$.subscribe(role => {
+
+      this.isAdmin = role === 'Admin';
+
+      if (this.isAdmin) {
+        this.displayedColumns = ['productCategoryID', 'name', 'actions'];
+      } else {
+        this.displayedColumns = ['productCategoryID', 'name'];
+      }
+
+    });
+
     this.loadCategories();
   }
 
@@ -43,6 +54,7 @@ export class CategoriesComponent implements OnInit {
       }
     });
   }
+
 
   openCategoryModal() {
 
