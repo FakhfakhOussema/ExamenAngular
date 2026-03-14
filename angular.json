@@ -28,6 +28,9 @@
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
+            "allowedCommonJsDependencies": [
+              "sweetalert2"
+            ],
             "scripts": []
           },
           "configurations": {

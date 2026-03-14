@@ -18,7 +18,7 @@ export class AnalyticsService {
   }
 
   getSalesByPeriod(year: number, grain: Grain = 'month'): Observable<PeriodRow[]> {
-    const actualGrain = grain === 'month' ? 'monthetails' : grain;
+    const actualGrain = grain === 'month' ? 'month' : grain;
     const params = new HttpParams().set('year', year).set('grain', actualGrain);
     return this.http.get<PeriodRow[]>(`${this.baseUrl}/sales/period`, { params });
   }
