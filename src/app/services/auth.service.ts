@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,6 @@ export class AuthService {
 
   private roleSubject = new BehaviorSubject<string | null>(null);
   role$ = this.roleSubject.asObservable();
-
 
   constructor(private http: HttpClient) { }
 
@@ -30,16 +30,16 @@ export class AuthService {
     return this.http.get<any>(`${this.baseUrl}/Profile`, { headers });
   }
 
-
-  loadUserRole() {
-    this.getProfile().subscribe({
-      next: (profile) => {
+  loadUserRole(): Observable<any> {
+    return this.getProfile().pipe(
+      tap((profile) => {
         this.roleSubject.next(profile.role);
-      },
-      error: () => {
+      }),
+      catchError((error) => {
         this.roleSubject.next(null);
-      }
-    });
+        return of(null);
+      })
+    );
   }
 
 
@@ -56,25 +56,21 @@ export class AuthService {
   }
 
   signOut() {
-  localStorage.clear();         
-  this.roleSubject.next(null); 
-}
+    localStorage.clear();
+    this.roleSubject.next(null);
+  }
 
   isAdmin(): boolean {
     return this.roleSubject.value === 'Admin';
   }
 
-
   isAuthenticated(): boolean {
-
     const token = localStorage.getItem("token");
 
     if (!token) return false;
 
     try {
-
       const payload = JSON.parse(atob(token.split('.')[1]));
-
       const exp = payload.exp * 1000;
 
       if (Date.now() > exp) {
@@ -83,7 +79,6 @@ export class AuthService {
       }
 
       return true;
-
     } catch {
       return false;
     }

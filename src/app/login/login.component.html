@@ -8,19 +8,48 @@
 
       <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput type="email" name="email" [(ngModel)]="email" required />
+        <input
+          id="login-email"
+          data-testid="login-email"
+          matInput
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          required
+        />
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput type="password" name="password" [(ngModel)]="password" required />
+        <input
+          id="login-password"
+          data-testid="login-password"
+          matInput
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+        />
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit">
+      <button
+        id="login-submit"
+        data-testid="login-submit"
+        mat-raised-button
+        color="primary"
+        type="submit"
+      >
         Sign in
       </button>
 
-      <button mat-button type="button" (click)="goToSignup()" style="margin-top:10px;width:100%">
+      <button
+        id="go-signup"
+        data-testid="go-signup"
+        mat-button
+        type="button"
+        (click)="goToSignup()"
+        style="margin-top:10px;width:100%"
+      >
         New here? Create an account
       </button>
 

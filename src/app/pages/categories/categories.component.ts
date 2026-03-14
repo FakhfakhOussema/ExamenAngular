@@ -24,7 +24,6 @@ export class CategoriesComponent implements OnInit {
   ngOnInit(): void {
 
     this.authService.role$.subscribe(role => {
-
       this.isAdmin = role === 'Admin';
 
       if (this.isAdmin) {

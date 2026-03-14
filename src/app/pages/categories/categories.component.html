@@ -1,6 +1,8 @@
 <h2>Categories</h2>
 <button
   *ngIf="isAdmin"
+  id="add-category-btn"
+  data-testid="add-category-btn"
   mat-raised-button
   color="primary"
   (click)="openCategoryModal()"

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ChannelRow, Kpis, PeriodRow, KeyValueRow } from '../Modeles/Analytics';
 
-export type Grain = 'year' | 'month' | 'monthetails';
+export type Grain = 'year' | 'month';
 
 @Injectable({ providedIn: 'root' })
 export class AnalyticsService {
