@@ -24,27 +24,41 @@ style="width:80%; margin:auto;">
 
 <!-- Name -->
 <ng-container matColumnDef="name">
-<th mat-header-cell *matHeaderCellDef>Name</th>
-<td mat-cell *matCellDef="let element">
-{{element.name}}
-</td>
+  <th mat-header-cell *matHeaderCellDef>Name</th>
+  <td
+    mat-cell
+    *matCellDef="let element"
+    [attr.data-testid]="'category-name-' + element.productCategoryID">
+    {{element.name}}
+  </td>
 </ng-container>
 
 <!-- Actions -->
 <ng-container matColumnDef="actions">
-<th mat-header-cell *matHeaderCellDef>Actions</th>
+  <th mat-header-cell *matHeaderCellDef>Actions</th>
 
-<td mat-cell *matCellDef="let element">
+  <td
+    mat-cell
+    *matCellDef="let element"
+    [attr.data-testid]="'category-actions-' + element.productCategoryID">
 
-<button mat-icon-button color="accent" (click)="openEditCategoryModal(element)">
-<mat-icon>edit</mat-icon>
-</button>
+    <button
+      mat-icon-button
+      color="accent"
+      (click)="openEditCategoryModal(element)"
+      [attr.data-testid]="'edit-category-' + element.productCategoryID">
+      <mat-icon>edit</mat-icon>
+    </button>
 
-<button mat-icon-button color="warn" (click)="deleteCategory(element.productCategoryID)">
-<mat-icon>delete</mat-icon>
-</button>
+    <button
+      mat-icon-button
+      color="warn"
+      (click)="deleteCategory(element.productCategoryID)"
+      [attr.data-testid]="'delete-category-' + element.productCategoryID">
+      <mat-icon>delete</mat-icon>
+    </button>
 
-</td>
+  </td>
 </ng-container>
 
 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

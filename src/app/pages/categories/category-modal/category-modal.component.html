@@ -1,27 +1,28 @@
-<h2 mat-dialog-title>
+<h2 id="category-modal-title" mat-dialog-title>
   {{ isEditMode ? 'Edit Category' : 'Add Category' }}
 </h2>
 
 <mat-dialog-content [formGroup]="form">
-
   <mat-form-field style="width:100%">
     <mat-label>Category Name</mat-label>
-    <input matInput formControlName="name">
+    <input
+      id="category-name-input"
+      matInput
+      formControlName="name">
   </mat-form-field>
-
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-
-  <button mat-button mat-dialog-close>
+  <button id="cancel-category-btn" mat-button mat-dialog-close>
     Cancel
   </button>
 
-  <button mat-raised-button
-          color="primary"
-          [disabled]="form.invalid"
-          (click)="saveCategory()">
+  <button
+    id="save-category-btn"
+    mat-raised-button
+    color="primary"
+    [disabled]="form.invalid"
+    (click)="saveCategory()">
     Save
   </button>
-
 </mat-dialog-actions>
